@@ -1,0 +1,180 @@
+@extends('layouts.app')
+
+@section('content')
+    @include('layouts.navbar')
+    <div class="container mb-5 mt-5">
+        <h1>List Tiket</h1>
+    </div>
+
+    <div class="container mb-3">
+        @auth
+            @if (Auth::user()->role === 'employe')
+                <a class="btn btn-primary" href="/ticket/create" role="button">Add New Ticket</a>
+            @endif
+        @endauth
+
+        @if ($errors->any())
+            @php
+                flash()->addError('There was an error in your data.', 'Error Ticket');
+            @endphp
+            <div class="alert alert-danger alert-dismissible fade show mt-3 mb-3" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="col-1">No</th>
+                    <th class="col-3">Tiket</th>
+                    <th class="col-2">Lokasi</th>
+                    <th class="col-2">Keberangkatan</th>
+                    <th class="col-1">Stok</th>
+                    <th class="col-1">Harga</th>
+                    <th class="col-2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($tickets as $ticket)
+                    <tr>
+                        <th>{{ $loop->iteration }}</th>
+                        <td>{{ $ticket->name }}</td>
+                        <td>{{ $ticket->location->name }}</td>
+                        <td>{{ $ticket->sail_time }}</td>
+                        <td>{{ $ticket->stock }}</td>
+                        <td>{{ $ticket->price }}</td>
+                        <td>
+                            <div class="row">
+                                <div class="col-5"><button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#showModal" data-id="{{ $ticket->id }}"
+                                        data-nama="{{ $ticket->name }}" data-location-id="{{ $ticket->location_id }}"
+                                        data-stok="{{ $ticket->stock }}" data-price="{{ $ticket->price }}"
+                                        data-sail-time="{{ $ticket->sail_time }}"
+                                        data-description="{{ $ticket->description }}"
+                                        onclick="isiModal(this)">Detail</button></div>
+                                @auth
+                                    @if (Auth::user()->role === 'employe')
+                                        <div class="col-5">
+                                            <form action="/ticket/{{ $ticket->id }}" method="post"
+                                                onsubmit="return confirm('Are You Sure To Delete This Item?');">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-primary"
+                                                    onclick="confirmDelete()">Delete</button>
+                                            </form>
+                                        </div>
+                                    @elseif (Auth::user()->role === 'member')
+                                        <div class="col-5">
+                                            <form action="#" method="get">
+                                                <button type="submit" class="btn btn-primary">Booking</button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                @endauth
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="showModalLabel">Details Ticket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/ticket" method="POST">
+                        @csrf
+                        @method('put')
+                        <input type="hidden" name="id" id="ticket-id">
+                        <div class="form-group">
+                            <label for="name-ticket" class="col-form-label">Ticket Name</label>
+                            <input type="text" name="name" class="form-control" id="name-ticket"
+                                @guest disabled @endguest required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location-ticket" class="col-form-label">Locations</label>
+                            <select class="form-control" name="location_id" id="location-ticket" @guest disabled @endguest
+                                required>
+                                <option value="" disabled>Select Location Sail</option>
+                                @foreach ($locations as $location)
+                                    <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="stock-ticket" class="col-form-label">Stock</label>
+                            <input type="number" name="stock" class="form-control" id="stock-ticket"
+                                @guest disabled @endguest required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-price" class="col-form-label">Price</label>
+                            <input type="number" name="price" class="form-control" id="ticket-price"
+                                @guest disabled @endguest required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-sail-time" class="col-form-label">Sail Time</label>
+                            <input type="datetime-local" name="sail-time" class="form-control" id="ticket-sail-time"
+                                @guest disabled @endguest required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description-ticket" class="col-form-label">Description</label>
+                            <textarea name="description" id="description-ticket"rows="6" class="col-12" @guest disabled @endguest
+                                required></textarea>
+                        </div>
+                        <div class="row">
+                            @auth
+                                @if (Auth::user()->role === 'employe')
+                                    <div class="col d-flex justify-content-start"><button type="submit"
+                                            class="btn btn-primary">Edit Ticket</button>
+                                    </div>
+                                @endif
+                            @endauth
+                            <div class="col d-flex justify-content-end"><button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('js')
+    <script>
+        const ticketID = document.querySelector('#ticket-id')
+        const ticketName = document.querySelector('#name-ticket')
+        const ticketLocation = document.querySelector('#location-ticket')
+        const ticketStock = document.querySelector('#stock-ticket')
+        const ticketPrice = document.querySelector('#ticket-price')
+        const ticketSailTime = document.querySelector('#ticket-sail-time')
+        const ticketDescription = document.querySelector('#description-ticket')
+
+        function isiModal(e) {
+            console.log(e);
+            ticketID.value = e.getAttribute("data-id");
+            ticketName.value = e.getAttribute("data-nama");
+            ticketLocation.value = e.getAttribute("data-location-id");
+            ticketStock.value = e.getAttribute("data-stok");
+            ticketPrice.value = e.getAttribute("data-price");
+            ticketSailTime.value = e.getAttribute("data-sail-time");
+            ticketDescription.value = e.getAttribute("data-description");
+        }
+    </script>
+@endsection
