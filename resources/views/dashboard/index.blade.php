@@ -9,13 +9,13 @@
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="http://placekitten.com/370/100" class="d-block w-100" alt="...">
+                    <img src="{{asset('asset/image/sail1.jpg')}}" style="height: 300px; object-fit: cover; object-position: center;" class="d-block w-100 rounded" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="http://placekitten.com/g/370/100" class="d-block w-100" alt="...">
+                    <img src="{{asset('asset/image/sail2.jpg')}}" style="height: 300px; object-fit: cover; object-position: 50% 65%;" class="d-block w-100 rounded" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="http://placekitten.com/370/100" class="d-block w-100" alt="...">
+                    <img src="{{asset('asset/image/sail3.jpg')}}" style="height: 300px; object-fit: cover; object-position: center;" class="d-block w-100 rounded" alt="...">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
@@ -32,18 +32,24 @@
     <div class="container mt-4">
         <h3 class="mb-3 text-center text-secondary">Bring your destion dreams come true</h3>
 
-        <div class="input-group">
-            <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+        <div class="input-group d-flex justify-content-end mt-4">
+            {{-- <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"> --}}
+            <select class="form-control" aria-label="Default select example">
+                <option selected value="" class="text-center">Select Location Sail</option>
+                @foreach ($locations as $location)
+                    <option value="{{$location->id}}" class="text-center">{{$location->name}}</option>
+                @endforeach
+              </select>
             <div class="input-group-append">
-                <button class="btn btn-primary">Search your destination</button>
+                <button class="btn btn-primary">Select a port location</button>
             </div>
         </div>
     </div>
 
-    <div class="container mb-5">
+    <div class="container mb-3">
         <div class="row">
             @foreach ($tickets as $ticket)
-                <div class="col-md-4 mt-5 d-flex align-items-stretch">
+                <div class="col-lg-4 col-md-6 mt-5 d-flex align-items-stretch">
                     <div class="card">
                         <div class="card-header">{{ $ticket->name }} (Rp. {{$ticket->price}})</div>
                         <ul class="list-group list-group-flush">
@@ -60,6 +66,10 @@
             @endforeach
 
         </div>
+    </div>
+
+    <div class="container mb-5">
+        <a class="btn btn-primary btn-block" href="/ticket" role="button">Show Me More Location!</a>
     </div>
 
 
