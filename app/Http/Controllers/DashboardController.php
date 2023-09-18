@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     //
     public function index(){
-        $tickets = Ticket::all();
+        $tickets = Ticket::limit(9)->get();
         $locations = Location::all();
         return view('dashboard.index', compact('tickets', 'locations'));
     }

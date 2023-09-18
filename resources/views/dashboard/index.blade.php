@@ -51,9 +51,9 @@
             @foreach ($tickets as $ticket)
                 <div class="col-lg-4 col-md-6 mt-5 d-flex align-items-stretch">
                     <div class="card">
-                        <div class="card-header">{{ $ticket->name }} (Rp. {{$ticket->price}})</div>
+                        <div class="card-header">{{ $ticket->name }} (Rp {{number_format($ticket->price, 2, ",", ".")}})</div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">{{ Str::limit($ticket->description, 200) }}</li>
+                            <li class="list-group-item text-justify">{{ Str::limit($ticket->description, 200) }}</li>
                             <li class="list-group-item">
                                 <div class="row d-flex justify-content-between">
                                     <div class="col-md-4 text-left">Stock: {{ $ticket->stock }} </div>
