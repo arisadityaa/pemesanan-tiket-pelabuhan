@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@include('layouts.navbar')
     <div class="container mb-5 mt-4">
         <h1>Boking Pemesanan</h1>
 
@@ -12,13 +13,13 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="stock" class="col-form-label">Stock</label>
-                                <input type="text" value="3" class="form-control" id="stock" disabled>
+                                <input type="text" value="{{$boking->stock}}" class="form-control" id="stock" disabled>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="price" class="col-form-label">Price</label>
-                                <input type="text" value="12000" class="form-control" id="price" disabled>
+                                <input type="text" value="{{$boking->price}}" class="form-control" id="price" disabled>
                             </div>
                         </div>
                     </div>
@@ -27,19 +28,19 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Locations</label>
-                                <input type="text" value="lorem" class="form-control" id="recipient-name" disabled>
+                                <input type="text" value="{{$boking->location->name}}" class="form-control" id="recipient-name" disabled>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Sail Time</label>
-                                <input type="text" value="lorem" class="form-control" id="recipient-name" disabled>
+                                <input type="text" value="{{date('D, d M Y h:i', strtotime($boking->sail_time))}}" class="form-control" id="recipient-name" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Description</label><br>
-                        <textarea name="" id="recipient-name" class="col-12" rows="6" disabled>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta possimus est non quis, numquam libero nobis, delectus labore eos et, harum expedita nemo voluptas? Recusandae vitae reiciendis quas quibusdam nam.</textarea>
+                        <textarea name="" id="recipient-name" class="col-12" rows="6" disabled>{{$boking->description}}</textarea>
                     </div>
                 </form>
             </div>
@@ -52,11 +53,11 @@
                         <form action="" method="post">
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Ticket Name</label>
-                                <input type="text" value="lorem" class="form-control" id="recipient-name" disabled>
+                                <input type="text" value="{{$boking->name}}" class="form-control" id="recipient-name" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="total-price" class="col-form-label d-flex justify-content-center">Harga</label>
-                                <input type="number" id="total-price" value="12000" class="form-control" disabled>
+                                <input type="number" id="total-price" value="{{$boking->price}}" class="form-control" disabled>
                             </div>
                             <div class="form-group text-center">
                                 <label for="count-ticket">Jumlah Tiket</label><br>

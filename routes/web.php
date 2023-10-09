@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\SailController;
 use App\Http\Controllers\TicketController;
 use App\Models\Member;
 use Illuminate\Support\Facades\Route;
@@ -47,7 +48,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/login',  'showLogin')->name('login')->middleware('guest');
 });
 Route::get('/boking/{id}', [MemberController::class, 'boking']);
-Route::get('/ticket/boking/', [MemberController::class, 'show']);
+Route::get('/ticket/boking/{id}', [MemberController::class, 'show'])->middleware('auth');
 
 Route::get('/employe', [EmployeController::class, 'index'])->middleware('auth');
 Route::get('/employe/{user}', [AuthController::class, 'showUser']);
@@ -56,11 +57,13 @@ Route::put('/employe/edit-user', [AuthController::class, 'editUser']);
 Route::put('/employe/edit-password', [AuthController::class, 'editPassword']);
 
 
-
-
-
-
-
 Route::get('/member/{user}', [AuthController::class, 'showUser']);
 Route::put('/member/edit-user', [AuthController::class, 'editUser']);
 Route::put('/member/edit-password', [AuthController::class, 'editPassword']);
+
+
+Route::get('/sail', function(){
+    return view('sails.index');
+});
+
+Route::get('/sail/ticket', [SailController::class, 'ticket']);

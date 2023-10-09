@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('member_id')->unsigned();
             $table->integer('total_price');
             $table->integer('count');
+            $table->enum('status', ['Accept','Reject', 'Pending'])->default('pending');
             $table->timestamps();
             $table->foreign('ticket_id')->references('id')->on('tickets');
             $table->foreign('member_id')->references('id')->on('members');

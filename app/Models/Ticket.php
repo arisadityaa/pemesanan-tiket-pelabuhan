@@ -13,4 +13,8 @@ class Ticket extends Model
     public function location(){
         return $this->belongsTo(Location::class);
     }
+
+    public function boking(){
+        return $this->hasMany(Boking::class);
+    }
 }

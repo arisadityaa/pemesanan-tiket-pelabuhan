@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.navbar')
-    <div class="container mb-5 mt-5">
+    <div class="container mb-3 mt-5">
         <h1>List Tiket</h1>
     </div>
 
@@ -30,6 +30,16 @@
         @endif
     </div>
     <div class="container">
+        <div class="form-group row">
+            <label for="" class="form-label col-2">Sort By</label>
+            <select name="" id="" class="form-control col-10">
+                <option selected value="">Show All</option>
+                @foreach ($locations as $location)
+                    <option value="{{ $location->id }}">{{ $location->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -73,7 +83,7 @@
                                         </div>
                                     @elseif (Auth::user()->role === 'member')
                                         <div class="col-5">
-                                            <form action="#" method="get">
+                                            <form action="/ticket/boking/" method="get">
                                                 <button type="submit" class="btn btn-primary">Booking</button>
                                             </form>
                                         </div>
@@ -105,12 +115,12 @@
                         <div class="form-group">
                             <label for="name-ticket" class="col-form-label">Ticket Name</label>
                             <input type="text" name="name" class="form-control" id="name-ticket"
-                                @guest disabled @endguest required>
+                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest required>
                         </div>
                         <div class="form-group">
                             <label for="location-ticket" class="col-form-label">Locations</label>
-                            <select class="form-control" name="location_id" id="location-ticket" @guest disabled @endguest
-                                required>
+                            <select class="form-control" name="location_id" id="location-ticket"
+                               @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest required>
                                 <option value="" disabled>Select Location Sail</option>
                                 @foreach ($locations as $location)
                                     <option value="{{ $location->id }}">{{ $location->name }}</option>
@@ -120,22 +130,22 @@
                         <div class="form-group">
                             <label for="stock-ticket" class="col-form-label">Stock</label>
                             <input type="number" name="stock" class="form-control" id="stock-ticket"
-                                @guest disabled @endguest required>
+                               @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest required>
                         </div>
                         <div class="form-group">
                             <label for="ticket-price" class="col-form-label">Price</label>
                             <input type="number" name="price" class="form-control" id="ticket-price"
-                                @guest disabled @endguest required>
+                               @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest required>
                         </div>
                         <div class="form-group">
                             <label for="ticket-sail-time" class="col-form-label">Sail Time</label>
                             <input type="datetime-local" name="sail-time" class="form-control" id="ticket-sail-time"
-                                @guest disabled @endguest required>
+                               @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest required>
                         </div>
                         <div class="form-group">
                             <label for="description-ticket" class="col-form-label">Description</label>
-                            <textarea name="description" id="description-ticket"rows="6" class="col-12" @guest disabled @endguest
-                                required></textarea>
+                            <textarea name="description" id="description-ticket"rows="6" class="col-12" required
+                               @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest></textarea>
                         </div>
                         <div class="row">
                             @auth

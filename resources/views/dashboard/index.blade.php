@@ -60,7 +60,9 @@
                                     <div class="col-md-8 text-right">Sail time: {{ date('D, d M Y', strtotime($ticket->sail_time)) }}</div>
                                 </div>
                             </li>
-                            <div class="card-footer"> <button class="btn btn-primary btn-block">Book Now</button></div>
+                            <div class="card-footer">
+                                <a class="btn btn-primary btn-block" href="/ticket/boking/{{$ticket->id}}">@guest Login To Book @else Book Now @endguest</a>
+                            </div>
                     </div>
                 </div>
             @endforeach
@@ -71,44 +73,4 @@
     <div class="container mb-5">
         <a class="btn btn-primary btn-block" href="/ticket" role="button">Show Me More Location!</a>
     </div>
-
-
-
-    {{-- <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-md-2 mt-4">Our Location</div>
-            <div class="col-md-4 text-center">
-                <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="card">
-                                <div class="card-body">bachehe</div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="card">
-                                <div class="card-body">bachehe</div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="card">
-                                <div class="card-body">bachehe</div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls2"
-                        data-slide="prev">
-                        <span class="carousel-control-prev-icon bg-secondary" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-target="#carouselExampleControls2"
-                        data-slide="next">
-                        <span class="carousel-control-next-icon bg-secondary" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </button>
-                </div>
-            </div>
-            
-        </div>
-    </div> --}}
 @endsection
