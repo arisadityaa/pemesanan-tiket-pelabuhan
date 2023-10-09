@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Location;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -18,7 +19,11 @@ class TicketController extends Controller
     {
         //
         $title = "Ticket List";
-        $tickets = Ticket::with('location')->get();
+        if(Auth::user()->role === 'employe'){
+            $tickets = Ticket::with('location')->get();
+        }else{
+            $tickets = Ticket::where('stock', '>', 0)->with('location')->get();
+        }
         $locations = Location::get(['id', 'name']);
         return view('tickets.index', compact('tickets', 'locations', 'title'));
     }

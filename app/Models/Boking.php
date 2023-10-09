@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Boking extends Model
 {
     use HasFactory;
-    protected $fillabe = ['ticket_id','member_id', 'total_price', 'count', 'status'];
+    protected $fillable = ['ticket_id','member_id', 'total_price', 'count', 'status'];
 
     public function ticket(){
         return $this->belongsTo(Ticket::class);

@@ -83,7 +83,7 @@
                                         </div>
                                     @elseif (Auth::user()->role === 'member')
                                         <div class="col-5">
-                                            <form action="/ticket/boking/" method="get">
+                                            <form action="/ticket/boking/{{$ticket->id}}" method="get">
                                                 <button type="submit" class="btn btn-primary">Booking</button>
                                             </form>
                                         </div>

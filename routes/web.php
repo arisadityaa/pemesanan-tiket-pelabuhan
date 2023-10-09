@@ -32,7 +32,7 @@ Route::controller(LocationController::class)->group(function () {
 });
 
 Route::controller(TicketController::class)->group(function () {
-    Route::get('/ticket', 'index');
+    Route::get('/ticket', 'index')->middleware('auth');
     Route::delete('/ticket/{ticket}', 'destroy');
     Route::get('/ticket/create', 'create');
     Route::put('/ticket', 'update');
@@ -47,8 +47,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/register', 'showRegister')->middleware('guest');
     Route::get('/login',  'showLogin')->name('login')->middleware('guest');
 });
-Route::get('/boking/{id}', [MemberController::class, 'boking']);
+Route::get('/boking', [MemberController::class, 'index']);
 Route::get('/ticket/boking/{id}', [MemberController::class, 'show'])->middleware('auth');
+Route::post('/ticket/boking', [MemberController::class, 'boking'])->middleware('auth');
 
 Route::get('/employe', [EmployeController::class, 'index'])->middleware('auth');
 Route::get('/employe/{user}', [AuthController::class, 'showUser']);

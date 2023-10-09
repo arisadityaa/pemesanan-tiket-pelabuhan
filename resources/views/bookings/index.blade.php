@@ -18,15 +18,17 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($bokings as $boking)    
                 <tr>
-                    <th>1</th>
-                    <td>Tiket pelabuhan ketapang - pelabuhan banyuwangi</td>
+                    <th>{{$loop->iteration}}</th>
+                    <td>{{$boking->ticket->name}}</td>
                     {{-- <td>15.000</td>
                     <td class="text-center">2</td> --}}
-                    <td>30.000</td>
-                    <td>15 June 2023 15:40</td>
+                    <td>{{$boking->total_price}}</td> 
+                    <td>{{date('D, d M Y h:i', strtotime($boking->ticket->sail_time))}}</td>
                     <td><button class="btn btn-outline-dark"><i class="fa-regular fa-eye"></i> Show Detail</button></td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
