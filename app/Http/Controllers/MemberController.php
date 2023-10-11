@@ -14,15 +14,13 @@ class MemberController extends Controller
     //
     public function boking(Request $request){
         $ticket = Ticket::find($request->ticket_id);
-
         $stock = $ticket->stock;
         $newStock = $stock - $request->count;
-
         $ticket->update(['stock' => $newStock]);
+        Boking::create($request->all());
+
         flash()->addSuccess('Success Booked Ticket', 'Ticket Booked');
-        return redirect('/boking/{{$request->member_id}}');
-
-
+        return redirect("/boking");
     }
 
     public function show($id){

@@ -14,7 +14,7 @@ class SailController extends Controller
     }
 
     public function ticket(Request $request){
-        $ticket = Boking::with('ticket')->whereIn('id', $request)->get()->first();
+        $ticket = Boking::with('ticket')->with('member')->whereIn('id', $request)->get()->first();
         return view('sails.index', compact('ticket'));
     }
 }

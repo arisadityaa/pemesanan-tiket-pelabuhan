@@ -13,5 +13,8 @@ class Boking extends Model
     public function ticket(){
         return $this->belongsTo(Ticket::class);
     }
+    public function member(){
+        return $this->belongsTo(Member::class);
+    }
 
 }

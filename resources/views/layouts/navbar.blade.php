@@ -17,11 +17,14 @@
             @auth
                 @if (Auth::user()->role == 'member')
                     <li class="nav-item">
-                        <a class="nav-link " href="/boking/{{ Auth::user()->id }}">Bokings</a>
+                        <a class="nav-link " href="/boking">Bokings</a>
                     </li>
                 @else
                 <li class="nav-item">
                     <a class="nav-link " href="/employe">Employe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/sail">Sail</a>
                 </li>
                 @endif
             @endauth

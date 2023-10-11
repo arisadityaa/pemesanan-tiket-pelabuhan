@@ -31,8 +31,8 @@
     </div>
     <div class="container">
         <div class="form-group row">
-            <label for="" class="form-label col-2">Sort By</label>
-            <select name="" id="" class="form-control col-10">
+            <label for="location_sail" class="form-label col-2">Sort By</label>
+            <select name="location_sail" id="location_sail" class="form-control col-10">
                 <option selected value="">Show All</option>
                 @foreach ($locations as $location)
                     <option value="{{ $location->id }}">{{ $location->name }}</option>
@@ -44,11 +44,11 @@
             <thead>
                 <tr>
                     <th class="col-1">No</th>
-                    <th class="col-3">Tiket</th>
+                    <th class="col-2">Tiket</th>
                     <th class="col-2">Lokasi</th>
                     <th class="col-2">Keberangkatan</th>
                     <th class="col-1">Stok</th>
-                    <th class="col-1">Harga</th>
+                    <th class="col-2">Harga</th>
                     <th class="col-2">Action</th>
                 </tr>
             </thead>
@@ -58,18 +58,20 @@
                         <th>{{ $loop->iteration }}</th>
                         <td>{{ $ticket->name }}</td>
                         <td>{{ $ticket->location->name }}</td>
-                        <td>{{ $ticket->sail_time }}</td>
+                        <td>{{ date('D, d M Y', strtotime($ticket->sail_time)) }}</td>
                         <td>{{ $ticket->stock }}</td>
-                        <td>{{ $ticket->price }}</td>
+                        <td>Rp. {{ number_format($ticket->price, 2, ',', '.') }}</td>
                         <td>
                             <div class="row">
-                                <div class="col-5"><button type="button" class="btn btn-primary" data-toggle="modal"
+                                <div class="col-5">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#showModal" data-id="{{ $ticket->id }}"
                                         data-nama="{{ $ticket->name }}" data-location-id="{{ $ticket->location_id }}"
                                         data-stok="{{ $ticket->stock }}" data-price="{{ $ticket->price }}"
                                         data-sail-time="{{ $ticket->sail_time }}"
                                         data-description="{{ $ticket->description }}"
-                                        onclick="isiModal(this)">Detail</button></div>
+                                        onclick="isiModal(this)">Detail</button>
+                                </div>
                                 @auth
                                     @if (Auth::user()->role === 'employe')
                                         <div class="col-5">
@@ -83,7 +85,7 @@
                                         </div>
                                     @elseif (Auth::user()->role === 'member')
                                         <div class="col-5">
-                                            <form action="/ticket/boking/{{$ticket->id}}" method="get">
+                                            <form action="/ticket/boking/{{ $ticket->id }}" method="get">
                                                 <button type="submit" class="btn btn-primary">Booking</button>
                                             </form>
                                         </div>
@@ -114,13 +116,15 @@
                         <input type="hidden" name="id" id="ticket-id">
                         <div class="form-group">
                             <label for="name-ticket" class="col-form-label">Ticket Name</label>
-                            <input type="text" name="name" class="form-control" id="name-ticket"
-                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest required>
+                            <input type="text" name="name" class="form-control" id="name-ticket" autocomplete="off"
+                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="location-ticket" class="col-form-label">Locations</label>
                             <select class="form-control" name="location_id" id="location-ticket"
-                               @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest required>
+                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest
+                                required>
                                 <option value="" disabled>Select Location Sail</option>
                                 @foreach ($locations as $location)
                                     <option value="{{ $location->id }}">{{ $location->name }}</option>
@@ -130,22 +134,25 @@
                         <div class="form-group">
                             <label for="stock-ticket" class="col-form-label">Stock</label>
                             <input type="number" name="stock" class="form-control" id="stock-ticket"
-                               @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest required>
+                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="ticket-price" class="col-form-label">Price</label>
                             <input type="number" name="price" class="form-control" id="ticket-price"
-                               @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest required>
+                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="ticket-sail-time" class="col-form-label">Sail Time</label>
                             <input type="datetime-local" name="sail-time" class="form-control" id="ticket-sail-time"
-                               @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest required>
+                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="description-ticket" class="col-form-label">Description</label>
                             <textarea name="description" id="description-ticket"rows="6" class="col-12" required
-                               @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest></textarea>
+                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest></textarea>
                         </div>
                         <div class="row">
                             @auth
