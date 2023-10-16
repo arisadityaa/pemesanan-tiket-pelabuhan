@@ -32,7 +32,7 @@ class MemberController extends Controller
         // edit midleware
         if(Auth::user()){
         if(Auth::user()->role==='member'){
-            $bokings = Boking::where('member_id', Auth::user()->member->id)->with('ticket')->get();
+            $bokings = Boking::where('member_id', Auth::user()->member->id)->with('ticket', 'sail')->get();
             return view('bookings.index', compact('bokings'));
         }}
         // return view('bookings.index');

@@ -9,7 +9,7 @@ class Sail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['booking_id', 'employe_id'];
+    protected $fillable = ['boking_id', 'employe_id'];
 
     public function boking(){
         return $this->belongsTo(Boking::class);

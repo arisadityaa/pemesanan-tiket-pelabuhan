@@ -20,15 +20,21 @@
                 @foreach ($bokings as $boking)
                     <tr>
                         <th>{{ $loop->iteration }}</th>
-                        <td>{{$boking->id}}</td>
+                        <td>{{ $boking->id }}</td>
                         <td>{{ $boking->ticket->name }}</td>
                         <td>{{ date('D, d M Y h:i', strtotime($boking->ticket->sail_time)) }}</td>
-                        <td>{{$boking->status}}</td>
+                        <td>{{ $boking->status }}</td>
                         <td>
-                            <button type="button" class="btn btn-outline-dark" data-toggle="modal"
-                                data-target="#showModal"
-                               data-id="{{$boking->id}}" data-ticket="{{$boking->ticket->name}}" data-status="{{$boking->status}}" data-sail="{{date('D, d M Y h:i', strtotime($boking->ticket->sail_time))}}" data-count="{{$boking->count}}" data-total-price="{{$boking->total_price}}" data-description="{{$boking->ticket->description}}" onclick="isiModal(this)"
-                                ><i class="fa-regular fa-eye"></i> Show Detail</button>
+                            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#showModal"
+                                @isset($boking->sail)
+                                data-employe="{{ $boking->sail->employe->user->name }}"
+                                @endisset
+                                data-id="{{ $boking->id }}" data-ticket="{{ $boking->ticket->name }}"
+                                data-status="{{ $boking->status }}"
+                                data-sail="{{ date('D, d M Y h:i', strtotime($boking->ticket->sail_time)) }}"
+                                data-count="{{ $boking->count }}" data-total-price="{{ $boking->total_price }}"
+                                data-description="{{ $boking->ticket->description }}" onclick="isiModal(this)">
+                                <i class="fa-regular fa-eye"></i> Show Detail</button>
                         </td>
                     </tr>
                 @endforeach
@@ -64,10 +70,13 @@
                             <label for="booking-status" class="col-form-label">Status</label>
                             <input type="text" name="status" id="booking-status" class="form-control" disabled>
                         </div>
+                        <div class="form-group" id="employe-data">
+                            <label for="employe-handle" class="col-form-label">Employe Handle</label>
+                            <input type="text" name="employe" id="employe-handle" class="form-control" disabled>
+                        </div>
                         <div class="form-group">
                             <label for="ticket-sail-time" class="col-form-label">Sail Time</label>
-                            <input type="text" name="sail-time" class="form-control" id="ticket-sail-time"
-                                disabled>
+                            <input type="text" name="sail-time" class="form-control" id="ticket-sail-time" disabled>
                         </div>
                         <div class="form-group">
                             <label for="stock-ticket" class="col-form-label">Count</label>
@@ -92,27 +101,34 @@
 @endsection
 
 @section('js')
+    <script>
+        const bookingId = document.querySelector('#boking-id')
+        const ticketName = document.querySelector('#name-ticket')
+        const bookingStatus = document.querySelector('#booking-status')
+        const SailTime = document.querySelector('#ticket-sail-time')
+        const bookCount = document.querySelector('#stock-ticket')
+        const totalPrice = document.querySelector('#ticket-price')
+        const ticketDescription = document.querySelector('#description-ticket')
+        const employeHandle = document.querySelector("#employe-handle")
+        const employeCol = document.querySelector("#employe-data")
 
-<script>
-    const bookingId = document.querySelector('#boking-id')
-    const ticketName = document.querySelector('#name-ticket')
-    const bookingStatus = document.querySelector('#booking-status')
-    const SailTime = document.querySelector('#ticket-sail-time')
-    const bookCount = document.querySelector('#stock-ticket')
-    const totalPrice = document.querySelector('#ticket-price')
-    const ticketDescription = document.querySelector('#description-ticket')
-
-    function isiModal(e){
-        console.log(e)
-        bookingId.value = e.getAttribute("data-id")
-        ticketName.value = e.getAttribute("data-ticket")
-        bookingStatus.value = e.getAttribute("data-status")
-        SailTime.value = e.getAttribute("data-sail")
-        bookCount.value = e.getAttribute("data-count")
-        totalPrice.value = e.getAttribute("data-total-price")
-        ticketDescription.value = e.getAttribute("data-description")
-    }
-</script>
-
-    
+        function isiModal(e) {
+            console.log(e)
+            bookingId.value = e.getAttribute("data-id")
+            ticketName.value = e.getAttribute("data-ticket")
+            bookingStatus.value = e.getAttribute("data-status")
+            SailTime.value = e.getAttribute("data-sail")
+            bookCount.value = e.getAttribute("data-count")
+            totalPrice.value = e.getAttribute("data-total-price")
+            ticketDescription.value = e.getAttribute("data-description")
+            const employe = e.getAttribute("data-employe")
+            if(employe===null){
+                employeCol.hidden = true
+            }else{
+                employeCol.hidden = false
+                employeHandle.value = employe
+            }
+            console.log(employe);
+        }
+    </script>
 @endsection
