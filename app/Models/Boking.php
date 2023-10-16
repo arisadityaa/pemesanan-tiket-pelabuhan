@@ -17,4 +17,8 @@ class Boking extends Model
         return $this->belongsTo(Member::class);
     }
 
+    public function sail(){
+        return $this->hasMany(Sail::class);
+    }
+
 }

@@ -14,4 +14,8 @@ class Employe extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function sail(){
+        return $this->hasMany(Sail::class);
+    }
 }
