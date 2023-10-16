@@ -7,25 +7,23 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             @auth
-            <li class="nav-item">
-                <a class="nav-link" href="/location">Lokasi</a>
-            </li>
-            @endauth
-            <li class="nav-item">
-                <a class="nav-link" href="/ticket">Ticket</a>
-            </li>
-            @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="/location">Lokasi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ticket">Ticket</a>
+                </li>
                 @if (Auth::user()->role == 'member')
-                <li class="nav-item">
-                    <a class="nav-link " href="/boking">Bokings</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/boking">Bokings</a>
+                    </li>
                 @else
-                <li class="nav-item">
-                    <a class="nav-link " href="/employe">Employe</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="/sail">Sail</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/employe">Employe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/sail">Sail</a>
+                    </li>
                 @endif
             @endauth
         </ul>
@@ -34,10 +32,13 @@
             <div>
                 <ul class="navbar-nav mr-auto">
                     <li>
-                        <a class="btn bg-light mr-2" href="/{{Auth::user()->role === 'member' ? 'member' : 'employe'}}/{{Auth::user()->id}}"><i class="fa-regular fa-user"></i> {{ Auth::user()->name }}</a>
+                        <a class="btn bg-light mr-2"
+                            href="/{{ Auth::user()->role === 'member' ? 'member' : 'employe' }}/{{ Auth::user()->id }}"><i
+                                class="fa-regular fa-user"></i> {{ Auth::user()->name }}</a>
                     </li>
                     <li>
-                        <a class="btn btn-outline-light" role="button" href="/logout" onclick="return confirm('Are you sure?')"> <i
+                        <a class="btn btn-outline-light" role="button" href="/logout"
+                            onclick="return confirm('Are you sure?')"> <i
                                 class="fa-sharp fa-solid fa-right-from-bracket"></i> Logout</a>
                     </li>
                 </ul>

@@ -9,8 +9,10 @@
 
     <div class="container mb-3">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">Create
-            Locations</button>
+        @if (Auth::user()->role === 'employe')
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">Create
+                Locations</button>
+        @endif
         @if ($errors->any())
             @php
                 flash()->addError('There was an error in your data.', 'Error Location');
@@ -34,7 +36,7 @@
                     <th class="col-2">No</th>
                     <th class="col-8">Lokasi</th>
                     @if (Auth::user()->role === 'employe')
-                    <th class="col-2">Action</th>
+                        <th class="col-2">Action</th>
                     @endif
                 </tr>
             </thead>
@@ -44,26 +46,26 @@
                         <th>{{ $loop->iteration }}</th>
                         <td>{{ $location->name }}</td>
                         @if (Auth::user()->role === 'employe')
-                        <td>
-                            <div class="row">
-                                <div class="col-4">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" id="editModalBtn"
-                                        data-target="#editModal" data-id="{{ $location->id }}"
-                                        data-name="{{ $location->name }}" onclick="isiModal(this)">Edit</button>
+                            <td>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" id="editModalBtn"
+                                            data-target="#editModal" data-id="{{ $location->id }}"
+                                            data-name="{{ $location->name }}" onclick="isiModal(this)">Edit</button>
+                                    </div>
+                                    <div class="col-4">
+                                        <form action="/location/{{ $location->id }}" method="post"
+                                            onsubmit="return confirm('Are You Sure To Delete This Item?');">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="col-4">
-                                    <form action="/location/{{ $location->id }}" method="post"
-                                        onsubmit="return confirm('Are You Sure To Delete This Item?');">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-primary">Delete</button>
-                                    </form>
-                                </div>
-                            </div>
 
-                        </td>
+                            </td>
                         @endif
-                        
+
                     </tr>
                 @endforeach
             </tbody>

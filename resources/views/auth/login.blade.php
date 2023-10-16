@@ -7,6 +7,22 @@
         </div>
 
         <div class="container mt-5">
+            @if ($errors->any())
+                <div class="row d-flex justify-content-center">
+                    <div class="col-6">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+
             <div class="row d-flex justify-content-center">
                 <div class="col-6">
                     <div class="card">
@@ -15,15 +31,18 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label for="input-email" class="form-label">Email address</label>
-                                    <input type="email" name="email" class="form-control" id="input-email" aria-describedby="emailHelp">
-                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                    <input type="email" name="email" class="form-control" id="input-email"
+                                        aria-describedby="emailHelp" required>
+                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="input-password" class="form-label">Password</label>
-                                    <input type="password" name="password" class="form-control" id="input-password">
+                                    <input type="password" name="password" class="form-control" id="input-password" required>
                                 </div>
                                 <div class="mb-1 form-check">
-                                    <input type="checkbox" class="form-check-input" id="visibility" onclick="showPassword()">
+                                    <input type="checkbox" class="form-check-input" id="visibility"
+                                        onclick="showPassword()">
                                     <label class="form-check-label" for="visibility">Show Password</label>
                                 </div>
                                 <div class="text-center mb-4">
@@ -33,7 +52,7 @@
                             </form>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -42,10 +61,10 @@
 @endsection
 
 @section('js')
-<script>
-    function showPassword(){
-        let visibility = document.getElementById("input-password");
-        visibility.type = visibility.type === 'password' ? 'text' : 'password';
-    }
-</script>
+    <script>
+        function showPassword() {
+            let visibility = document.getElementById("input-password");
+            visibility.type = visibility.type === 'password' ? 'text' : 'password';
+        }
+    </script>
 @endsection

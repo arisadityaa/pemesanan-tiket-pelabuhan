@@ -29,23 +29,23 @@
                                 <input type="hidden" value="member" name="role">
                                 <div class="mb-3">
                                     <label for="input-name" class="form-label">Your Name</label>
-                                    <input type="text" class="form-control" id="input-name" name="name">
+                                    <input type="text" class="form-control" id="input-name" name="name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="input-email" class="form-label">Email address</label>
                                     <input type="email" class="form-control" name="email" id="input-email"
-                                        aria-describedby="emailHelp">
+                                        aria-describedby="emailHelp" required>
                                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                         anyone else.</small>
                                 </div>
                                 <div class="mb-3">
                                     <label for="input-password" class="form-label">Password</label>
-                                    <input type="password" name="password" class="form-control" id="input-password">
+                                    <input type="password" name="password" class="form-control" id="input-password" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="reinput-password" class="form-label">Retype Password</label>
                                     <input type="password" name="password_confirmation" class="form-control"
-                                        id="reinput-password">
+                                        id="reinput-password" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-block">Register Your Account</button>
                             </form>
