@@ -16,9 +16,9 @@
             </li>
             @auth
                 @if (Auth::user()->role == 'member')
-                    <li class="nav-item">
-                        <a class="nav-link " href="/boking">Bokings</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/boking">Bokings</a>
+                </li>
                 @else
                 <li class="nav-item">
                     <a class="nav-link " href="/employe">Employe</a>

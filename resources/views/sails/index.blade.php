@@ -26,8 +26,8 @@
                         <p class="card-text text-muted"> {{$ticket->count}} Ticket, Rp. {{number_format($ticket->total_price, 2, ",", ".")}}</p>
                         @if ($ticket->status === 'Pending')
                         <div class="row d-flex justify-content-around">
-                            <a href="#" class="card-link text-success">Approve Tiket</a>
-                            <a href="#" class="card-link text-danger">Reject Tiket</a>
+                            <a href="/sail/accept/{{$ticket->id}}" class="card-link text-success">Approve Tiket</a>
+                            <a href="/sail/reject/{{$ticket->id}}" class="card-link text-danger">Reject Tiket</a>
                         </div>
                         @endif
                     </div>

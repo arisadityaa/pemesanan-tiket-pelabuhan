@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('sails', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('boking_id')->unsigned();
+            $table->unsignedBigInteger('employe_id')->unsigned();
             $table->timestamps();
+            $table->foreign('boking_id')->references('id')->on('bokings');
+            $table->foreign('employe_id')->references('id')->on('employes');
             $table->softDeletes();
         });
     }

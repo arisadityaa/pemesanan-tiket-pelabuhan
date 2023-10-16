@@ -51,20 +51,20 @@ Route::get('/boking', [MemberController::class, 'index']);
 Route::get('/ticket/boking/{id}', [MemberController::class, 'show'])->middleware('auth');
 Route::post('/ticket/boking', [MemberController::class, 'boking'])->middleware('auth');
 
-Route::get('/employe', [EmployeController::class, 'index'])->middleware('auth');
-Route::get('/employe/{user}', [AuthController::class, 'showUser']);
-Route::post('/employe', [AuthController::class, 'registerEmploye']);
-Route::put('/employe/edit-user', [AuthController::class, 'editUser']);
-Route::put('/employe/edit-password', [AuthController::class, 'editPassword']);
+Route::get('/employe', [EmployeController::class, 'index'])->middleware(['auth', 'employe']);
+Route::get('/employe/{user}', [AuthController::class, 'showUser'])->middleware(['auth', 'employe']);
+Route::post('/employe', [AuthController::class, 'registerEmploye'])->middleware(['auth', 'employe']);
+Route::put('/employe/edit-user', [AuthController::class, 'editUser'])->middleware(['auth', 'employe']);
+Route::put('/employe/edit-password', [AuthController::class, 'editPassword'])->middleware(['auth', 'employe']);
 
 
-Route::get('/member/{user}', [AuthController::class, 'showUser']);
-Route::put('/member/edit-user', [AuthController::class, 'editUser']);
-Route::put('/member/edit-password', [AuthController::class, 'editPassword']);
+Route::get('/member/{user}', [AuthController::class, 'showUser'])->middleware(['auth']);
+Route::put('/member/edit-user', [AuthController::class, 'editUser'])->middleware('auth');
+Route::put('/member/edit-password', [AuthController::class, 'editPassword'])->middleware('auth');
 
 
-Route::get('/sail', function(){
-    return view('sails.index');
-});
+Route::get('/sail', [SailController::class, 'index']);
 
+Route::get('/sail/accept/{id}', [SailController::class, 'accept']);
+Route::get('/sail/reject/{id}', [SailController::class, 'reject']);
 Route::get('/sail/ticket', [SailController::class, 'ticket']);

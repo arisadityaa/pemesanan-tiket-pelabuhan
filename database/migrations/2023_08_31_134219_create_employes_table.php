@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('employes', function (Blueprint $table) {
-            $table->id();$table->unsignedBigInteger('user_id')->unsigned();
+            $table->id();
+            $table->unsignedBigInteger('user_id')->unsigned();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->softDeletes();
