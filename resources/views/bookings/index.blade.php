@@ -71,7 +71,7 @@
                             <input type="text" name="status" id="booking-status" class="form-control" disabled>
                         </div>
                         <div class="form-group" id="employe-data">
-                            <label for="employe-handle" class="col-form-label">Employe Handle</label>
+                            <label for="employe-handle" class="col-form-label">Employe Accept</label>
                             <input type="text" name="employe" id="employe-handle" class="form-control" disabled>
                         </div>
                         <div class="form-group">
@@ -91,6 +91,10 @@
                             <textarea name="description" id="description-ticket"rows="6" class="col-12" disabled></textarea>
                         </div>
                     </form>
+                    <div class="form-group d-flex text-center">
+                            <div class="col"><a class="btn btn-primary btn-block" id="print-recipt" href="#" role="button">Print Recipt Book</a></div>
+                            <div class="col" id="acc-btn"><a class="btn btn-primary btn-block" id="print-acc" href="#" role="button">Print Recipt Accept</a></div>
+                    </div>
                     <div class="form-group">
                         <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
                     </div>
@@ -111,6 +115,9 @@
         const ticketDescription = document.querySelector('#description-ticket')
         const employeHandle = document.querySelector("#employe-handle")
         const employeCol = document.querySelector("#employe-data")
+        const documetAcc = document.querySelector("#acc-btn")
+        const printAcc = document.querySelector("#print-acc")
+        const printRecipt = document.querySelector("#print-recipt")
 
         function isiModal(e) {
             console.log(e)
@@ -121,12 +128,23 @@
             bookCount.value = e.getAttribute("data-count")
             totalPrice.value = e.getAttribute("data-total-price")
             ticketDescription.value = e.getAttribute("data-description")
+
+            printRecipt.setAttribute("href", `user-book/print/${e.getAttribute("data-id")}`)
+
             const employe = e.getAttribute("data-employe")
             if(employe===null){
                 employeCol.hidden = true
             }else{
                 employeCol.hidden = false
                 employeHandle.value = employe
+            }
+            if(e.getAttribute("data-status")==='Accept'){
+                let link = "/"
+                console.log(link);
+                printAcc.setAttribute("href", link)
+                documetAcc.hidden = false
+            }else{
+                documetAcc.hidden = true
             }
             console.log(employe);
         }

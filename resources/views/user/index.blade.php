@@ -18,10 +18,12 @@
                             <input type="text" value="{{$user->email}}" class="col-8 form-control" readonly>
                         </div>
                     </div>
+                    @if (Auth::user()->role === 'employe' || Auth::user()->id === $user->id)    
                     <div class="card-footer text-center">
                         <button class="btn btn-primary mr-5" data-toggle="modal" data-target="#EditUserModal">Edit User</button>
                         <button class="btn btn-primary ml-5" data-toggle="modal" data-target="#EditPasswordModal">Change Password</button>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

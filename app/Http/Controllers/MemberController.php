@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Boking;
 use App\Models\Ticket;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,5 +38,12 @@ class MemberController extends Controller
         }}
         // return view('bookings.index');
         return "ehe";
+    }
+
+    public function print_book($id){
+        $ticket = Boking::where('id', $id)->with('ticket', 'member')->first();
+        $title = "Bukti Booking";
+        $pdf = FacadePdf::loadview('document.booked', compact('ticket', 'title'));
+        return $pdf->stream();
     }
 }

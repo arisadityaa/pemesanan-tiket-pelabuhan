@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[DashboardController::class, 'index']);
+Route::get('/', [DashboardController::class, 'index']);
 
 
 Route::controller(LocationController::class)->group(function () {
@@ -47,24 +47,30 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/register', 'showRegister')->middleware('guest');
     Route::get('/login',  'showLogin')->name('login')->middleware('guest');
 });
+
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/user/{user}', 'showUser')->middleware(['auth']);
+    // employe
+    Route::post('/employe', 'registerEmploye')->middleware(['auth', 'employe']);
+    Route::put('/employe/edit-user', 'editUser')->middleware(['auth', 'employe']);
+    Route::put('/employe/edit-password', 'editPassword')->middleware(['auth', 'employe']);
+    // member
+    Route::put('/member/edit-user', 'editUser')->middleware('auth');
+    Route::put('/member/edit-password', 'editPassword')->middleware('auth');
+});
+
+Route::controller(SailController::class)->group(function () {
+    Route::get('/sail', 'index')->middleware(['auth', 'employe']);
+    Route::get('/sail/ticket', 'ticket')->middleware(['auth', 'employe']);
+    Route::get('/sail/accept/{id}', 'accept')->middleware(['auth', 'employe']);
+    Route::get('/sail/reject/{id}', 'reject')->middleware(['auth', 'employe']);
+});
+
 Route::get('/boking', [MemberController::class, 'index']);
 Route::get('/ticket/boking/{id}', [MemberController::class, 'show'])->middleware('auth');
 Route::post('/ticket/boking', [MemberController::class, 'boking'])->middleware('auth');
 
 Route::get('/employe', [EmployeController::class, 'index'])->middleware(['auth', 'employe']);
-Route::get('/employe/{user}', [AuthController::class, 'showUser'])->middleware(['auth', 'employe']);
-Route::post('/employe', [AuthController::class, 'registerEmploye'])->middleware(['auth', 'employe']);
-Route::put('/employe/edit-user', [AuthController::class, 'editUser'])->middleware(['auth', 'employe']);
-Route::put('/employe/edit-password', [AuthController::class, 'editPassword'])->middleware(['auth', 'employe']);
+Route::get('user-book/print/{id}', [MemberController::class, 'print_book']);
 
-
-Route::get('/member/{user}', [AuthController::class, 'showUser'])->middleware(['auth']);
-Route::put('/member/edit-user', [AuthController::class, 'editUser'])->middleware('auth');
-Route::put('/member/edit-password', [AuthController::class, 'editPassword'])->middleware('auth');
-
-
-Route::get('/sail', [SailController::class, 'index']);
-
-Route::get('/sail/accept/{id}', [SailController::class, 'accept']);
-Route::get('/sail/reject/{id}', [SailController::class, 'reject']);
-Route::get('/sail/ticket', [SailController::class, 'ticket']);
+Route::get('/test', fn()=> view('test.ajax'));

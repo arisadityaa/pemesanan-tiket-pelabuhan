@@ -26,7 +26,7 @@
                             <td class="text-center">
                                 @if (Auth::user()->id === $employe->id)
                                 {{-- <button class="btn btn-primary text-center">Edit</button> --}}
-                                <a class="btn btn-primary text-center" href="/employe/{{$employe->id}}">Edit</a>
+                                <a class="btn btn-primary text-center" href="/user/{{$employe->id}}">Edit</a>
                                 @endif
                             </td>
                         </tr>
