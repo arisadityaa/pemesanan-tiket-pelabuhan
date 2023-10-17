@@ -33,7 +33,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li>
                         <a class="btn bg-light mr-2"
-                            href="/{{ Auth::user()->role === 'member' ? 'member' : 'employe' }}/{{ Auth::user()->id }}"><i
+                            href="/user/{{ Auth::user()->id }}"><i
                                 class="fa-regular fa-user"></i> {{ Auth::user()->name }}</a>
                     </li>
                     <li>
