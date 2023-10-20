@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Boking;
 use App\Models\Location;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
@@ -103,5 +105,14 @@ class LocationController extends Controller
         $message = 'Location '.$name.' was deleted';
         flash()->addWarning($message, 'Location delete');
         return redirect()->back();
+    }
+
+    public function ajax(){
+        $locations = Location::all();
+        return view('test.ajax', compact('locations'));
+    }
+    public function get(){
+        $ticket = Ticket::all();
+        return $ticket;
     }
 }

@@ -33,7 +33,7 @@
         <div class="form-group row">
             <label for="location_sail" class="form-label col-2">Sort By</label>
             <select name="location_sail" id="location_sail" class="form-control col-10">
-                <option selected value="">Show All</option>
+                <option value="">Show All</option>
                 @foreach ($locations as $location)
                     <option value="{{ $location->id }}">{{ $location->name }}</option>
                 @endforeach
@@ -193,5 +193,23 @@
             ticketSailTime.value = e.getAttribute("data-sail-time");
             ticketDescription.value = e.getAttribute("data-description");
         }
+
+        $(document).ready(function() {
+            $("#location_sail").on("change", function() {
+                let location = $('#location_sail').find(":selected").val()
+                let urlPath = '/test/data'
+                // console.log(location);
+                $.ajax({
+                    url: urlPath,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        data.forEach(i => {
+                            console.log(i);
+                        });
+                    }
+                })
+            })
+        })
     </script>
 @endsection
