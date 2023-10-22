@@ -129,7 +129,7 @@
             totalPrice.value = e.getAttribute("data-total-price")
             ticketDescription.value = e.getAttribute("data-description")
 
-            printRecipt.setAttribute("href", `user-book/print/${e.getAttribute("data-id")}`)
+            printRecipt.setAttribute("href", `/user-book/print/${e.getAttribute("data-id")}`)
 
             const employe = e.getAttribute("data-employe")
             if(employe===null){
@@ -139,7 +139,7 @@
                 employeHandle.value = employe
             }
             if(e.getAttribute("data-status")==='Accept'){
-                let link = "/"
+                let link = `/user-ticket/print/${e.getAttribute("data-id")}`
                 console.log(link);
                 printAcc.setAttribute("href", link)
                 documetAcc.hidden = false

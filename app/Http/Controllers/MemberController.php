@@ -46,4 +46,13 @@ class MemberController extends Controller
         $pdf = FacadePdf::loadview('document.booked', compact('ticket', 'title'));
         return $pdf->stream();
     }
+
+    public function print_ticket($id){
+        $title = "Detail Transaksi";
+        $ticket = Boking::where('id', $id)->with('ticket', 'member', 'sail')->first();
+        $pdf = FacadePdf::loadView('document.acc', compact('title', 'ticket'));
+        return $pdf->stream();
+        // return view('document.acc', compact('title', 'ticket'));
+        // return $ticket;
+    }
 }
