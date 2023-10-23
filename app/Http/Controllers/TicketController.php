@@ -114,4 +114,21 @@ class TicketController extends Controller
         flash()->addWarning('The ticket was deleted', 'Location delete');
         return redirect()->back();
     }
+
+    public function filter_ticket($id){
+        $ticket = Ticket::where("location_id", $id)->with('location')->get();
+        $user = Auth::user();
+        if(isset($user)){
+            $role = Auth::user()->role;
+        }else{
+            $role = 'guest';
+        }
+        return response()->json(['role'=>$role, 'data' => $ticket]);
+        // return $ticket;
+    }
+    public function filter_all_ticket(){
+        $role = Auth::user()->role;
+        $ticket = Ticket::with('location')->get();
+        return response()->json(['role'=>$role, 'data' => $ticket]);
+    }
 }

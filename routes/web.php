@@ -67,8 +67,8 @@ Route::controller(SailController::class)->group(function () {
 });
 
 Route::get('/boking', [MemberController::class, 'index']);
-Route::get('/ticket/boking/{id}', [MemberController::class, 'show'])->middleware('auth');
-Route::post('/ticket/boking', [MemberController::class, 'boking'])->middleware('auth');
+Route::get('/ticket/boking/{id}', [MemberController::class, 'show'])->middleware('auth', 'member');
+Route::post('/ticket/boking', [MemberController::class, 'boking'])->middleware('auth', 'member');
 
 Route::get('/employe', [EmployeController::class, 'index'])->middleware(['auth', 'employe']);
 Route::get('/user-book/print/{id}', [MemberController::class, 'print_book']);
@@ -76,3 +76,6 @@ Route::get('/user-ticket/print/{id}', [MemberController::class, 'print_ticket'])
 
 Route::get('/test', [LocationController::class, 'ajax']);
 Route::get('/test/data', [LocationController::class, 'get']);
+
+Route::get('/ticket/location/{id}', [TicketController::class, 'filter_ticket']);
+Route::get('/ticket/all', [TicketController::class, 'filter_all_ticket']);

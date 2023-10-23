@@ -34,20 +34,17 @@
 
         <div class="input-group d-flex justify-content-end mt-4">
             {{-- <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"> --}}
-            <select class="form-control" aria-label="Default select example">
+            <select class="form-control" id="filter-location" aria-label="Default select example">
                 <option selected value="" class="text-center">Select Location Sail</option>
                 @foreach ($locations as $location)
                     <option value="{{$location->id}}" class="text-center">{{$location->name}}</option>
                 @endforeach
               </select>
-            <div class="input-group-append">
-                <button class="btn btn-primary">Select a port location</button>
-            </div>
         </div>
     </div>
 
     <div class="container mb-3">
-        <div class="row">
+        <div class="row" id="card-ticket">
             @foreach ($tickets as $ticket)
                 <div class="col-lg-4 col-md-6 mt-5 d-flex align-items-stretch">
                     <div class="card">
@@ -60,9 +57,11 @@
                                     <div class="col-md-8 text-right">Sail time: {{ date('D, d M Y', strtotime($ticket->sail_time)) }}</div>
                                 </div>
                             </li>
+                            @if (Auth::user()->role === 'member')    
                             <div class="card-footer">
                                 <a class="btn btn-primary btn-block" href="/ticket/boking/{{$ticket->id}}">@guest Login To Book @else Book Now @endguest</a>
                             </div>
+                            @endif
                     </div>
                 </div>
             @endforeach
@@ -73,4 +72,45 @@
     <div class="container mb-5">
         <a class="btn btn-primary btn-block" href="/ticket" role="button">Show Me More Location!</a>
     </div>
+@endsection
+
+
+@section('js')
+<script>
+    $('#filter-location').on("change", function(){
+        let location = $('#filter-location').find(":selected").val()
+        $.ajax({
+            url: location===null? `/ticket/all`:`/ticket/location/${location}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (response){
+                $('#card-ticket').html("")
+                response.data.forEach(i => {
+                    console.log(i);
+                    $('#card-ticket').append(`
+                        <div class="col-lg-4 col-md-6 mt-5 d-flex align-items-stretch">
+                            <div class="card">
+                                <div class="card-header"> ${i.name} (Rp ${i.price})</div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item text-justify">${i.description.substring(0,200)}</li>
+                                    <li class="list-group-item">
+                                        <div class="row d-flex justify-content-between">
+                                            <div class="col-md-4 text-left">Stock: ${i.stock} </div>
+                                            <div class="col-md-8 text-right">Sail time: ${i.sail_time}</div>
+                                        </div>
+                                    </li>
+                                    ${response.role!=='employe'? `<div class="card-footer">
+                                        <a class="btn btn-primary btn-block" href="/ticket/boking/${i.id}">${response.role==='member' ? 'Book Now': 'Login To Book'}</a>
+                                    </div>` : ''}
+                                    
+                            </div>
+                        </div>
+                    `)
+                });
+            }, 
+
+        })
+    })
+</script>
+    
 @endsection

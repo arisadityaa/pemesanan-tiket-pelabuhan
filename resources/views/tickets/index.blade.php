@@ -52,7 +52,7 @@
                     <th class="col-2">Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="table-data">
                 @foreach ($tickets as $ticket)
                     <tr>
                         <th>{{ $loop->iteration }}</th>
@@ -79,8 +79,7 @@
                                                 onsubmit="return confirm('Are You Sure To Delete This Item?');">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit" class="btn btn-primary"
-                                                    onclick="confirmDelete()">Delete</button>
+                                                <button type="submit" class="btn btn-primary">Delete</button>
                                             </form>
                                         </div>
                                     @elseif (Auth::user()->role === 'member')
@@ -197,19 +196,81 @@
         $(document).ready(function() {
             $("#location_sail").on("change", function() {
                 let location = $('#location_sail').find(":selected").val()
-                let urlPath = '/test/data'
-                // console.log(location);
+                let urlfilter = '/ticket/location/'
+                let urlAll = '/ticket/all'
+                console.log(location);
+
                 $.ajax({
-                    url: urlPath,
+                    url: location === "" ? urlAll : `${urlfilter}+${location}`,
                     type: 'GET',
                     dataType: 'json',
-                    success: function(data) {
-                        data.forEach(i => {
-                            console.log(i);
+                    success: function(response) {
+                        // console.log(data);
+                        $('#table-data').html("")
+                        let indexdata = 1;
+                        console.log(response);
+                        let role = response.role
+                        response.data.forEach(i => {
+                            // console.log(i);
+                            $('#table-data').append(
+                                `
+                                <tr>
+                                    <th>${indexdata++}</th>
+                                    <td>${i.name}</td>
+                                    <td>${i.location.name}</td>
+                                    <td>${i.sail_time}</td>
+                                    <td>${i.stock}</td>
+                                    <td>Rp. ${i.price}</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#showModal" data-id="${i.id}"
+                                                    data-nama="${i.name}" data-location-id="${i.location_id}"
+                                                    data-stok="${i.stock}" data-price="${i.price}"
+                                                    data-sail-time="${i.sail_time}"
+                                                    data-description="${i.description}"
+                                                    onclick="isiModal(this)">Detail</button>
+                                            </div>
+                                            ${role==='employe' ? 
+                                                `<div class="col-5">
+                                                    <form action="/ticket/${i.id}" method="post"
+                                                        onsubmit="return confirm('Are You Sure To Delete This Item?');">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                                    </form>
+                                                </div>`
+                                                :
+                                                `<div class="col-5">
+                                                    <form action="/ticket/boking/${i.id}" method="get">
+                                                        <button type="submit" class="btn btn-primary">Booking</button>
+                                                    </form>
+                                                </div>`
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                                `
+                            )
                         });
                     }
                 })
             })
         })
+
+        function btn_delete(data){
+            return
+            `
+            <div class="col-5">
+                <form action="/ticket/${data.id}" method="post"
+                    onsubmit="return confirm('Are You Sure To Delete This Item?');">
+                    //  @csrf
+                    //  @method('delete')
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </form>
+            </div>
+            `
+        }
     </script>
 @endsection
