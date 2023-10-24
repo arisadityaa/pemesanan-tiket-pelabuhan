@@ -116,19 +116,40 @@ class TicketController extends Controller
     }
 
     public function filter_ticket($id){
-        $ticket = Ticket::where("location_id", $id)->with('location')->get();
         $user = Auth::user();
         if(isset($user)){
             $role = Auth::user()->role;
         }else{
             $role = 'guest';
         }
+
+        if(Auth::user()){
+            if(Auth::user()->role === 'employe'){
+                $ticket = Ticket::where("location_id", $id)->with('location')->get();
+            }
+            $ticket = Ticket::where('stock', '>', 0)->where("location_id", $id)->with('location')->get();
+        }else{
+            $ticket = Ticket::where('stock', '>', 0)->where("location_id", $id)->with('location')->get();
+        }
+
         return response()->json(['role'=>$role, 'data' => $ticket]);
-        // return $ticket;
     }
     public function filter_all_ticket(){
-        $role = Auth::user()->role;
-        $ticket = Ticket::with('location')->get();
+        $user = Auth::user();
+        if(isset($user)){
+            $role = Auth::user()->role;
+        }else{
+            $role = 'guest';
+        }
+
+        if(Auth::user()){
+            if(Auth::user()->role === 'employe'){
+                $ticket = Ticket::where('stock', '>', 0)->with('location')->get();
+            }
+            $ticket = Ticket::with('location')->get();
+        }else{
+            $ticket = Ticket::with('location')->get();
+        }
         return response()->json(['role'=>$role, 'data' => $ticket]);
     }
 }
