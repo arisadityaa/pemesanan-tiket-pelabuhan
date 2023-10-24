@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Boking;
 use App\Models\Sail;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,6 +52,10 @@ class SailController extends Controller
     {
         if (Auth::user()->role === 'employe') {
             $boking = Boking::find($id);
+            $count = $boking->count;
+            $ticket_id = $boking->ticket_id;
+            $ticket = Ticket::find($ticket_id);
+            $ticket->update(['stock'=>$ticket->stock+$count]);
             $boking->update(['status' => 'Reject']);
             flash()->addSuccess('Ticket Rejected', 'Reject');
             return redirect()->back();

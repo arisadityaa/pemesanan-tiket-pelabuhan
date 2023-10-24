@@ -15,7 +15,7 @@
             <li>Nama Pemesan: {{ $ticket->member->user->name }}</li>
             <li>Nama Tiket: {{ $ticket->ticket->name }}</li>
             <li>Waktu Pelayaran: {{ date('D, d M Y h:i', strtotime($ticket->ticket->sail_time)) }}</li>
-            <li>Total: <strong>Rp.{{ number_format($ticket->ticket->price, 2, ',', '.') }}</strong></li>
+            <li>Total: <strong>Rp.{{ number_format($ticket->total_price, 2, ',', '.') }}</strong></li>
         </ul>
 
         <div style="text-align: center; color: orange">
