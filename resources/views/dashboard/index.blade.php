@@ -9,13 +9,19 @@
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="{{asset('asset/image/sail1.jpg')}}" style="height: 300px; object-fit: cover; object-position: center;" class="d-block w-100 rounded" alt="...">
+                    <img src="{{ asset('asset/image/sail1.jpg') }}"
+                        style="height: 300px; object-fit: cover; object-position: center;" class="d-block w-100 rounded"
+                        alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="{{asset('asset/image/sail2.jpg')}}" style="height: 300px; object-fit: cover; object-position: 50% 65%;" class="d-block w-100 rounded" alt="...">
+                    <img src="{{ asset('asset/image/sail2.jpg') }}"
+                        style="height: 300px; object-fit: cover; object-position: 50% 65%;" class="d-block w-100 rounded"
+                        alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="{{asset('asset/image/sail3.jpg')}}" style="height: 300px; object-fit: cover; object-position: center;" class="d-block w-100 rounded" alt="...">
+                    <img src="{{ asset('asset/image/sail3.jpg') }}"
+                        style="height: 300px; object-fit: cover; object-position: center;" class="d-block w-100 rounded"
+                        alt="...">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
@@ -37,9 +43,9 @@
             <select class="form-control" id="filter-location" aria-label="Default select example">
                 <option selected value="" class="text-center">Select Location Sail</option>
                 @foreach ($locations as $location)
-                    <option value="{{$location->id}}" class="text-center">{{$location->name}}</option>
+                    <option value="{{ $location->id }}" class="text-center">{{ $location->name }}</option>
                 @endforeach
-              </select>
+            </select>
         </div>
     </div>
 
@@ -48,20 +54,33 @@
             @foreach ($tickets as $ticket)
                 <div class="col-lg-4 col-md-6 mt-5 d-flex align-items-stretch">
                     <div class="card">
-                        <div class="card-header">{{ $ticket->name }} (Rp {{number_format($ticket->price, 2, ",", ".")}})</div>
+                        <div class="card-header">{{ $ticket->name }} (Rp {{ number_format($ticket->price, 2, ',', '.') }})
+                        </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item text-justify">{{ Str::limit($ticket->description, 200) }}</li>
                             <li class="list-group-item">
                                 <div class="row d-flex justify-content-between">
                                     <div class="col-md-4 text-left">Stock: {{ $ticket->stock }} </div>
-                                    <div class="col-md-8 text-right">Sail time: {{ date('D, d M Y', strtotime($ticket->sail_time)) }}</div>
+                                    <div class="col-md-8 text-right">Sail time:
+                                        {{ date('D, d M Y', strtotime($ticket->sail_time)) }}</div>
                                 </div>
                             </li>
-                            @if (Auth::user()->role === 'member')    
-                            <div class="card-footer">
-                                <a class="btn btn-primary btn-block" href="/ticket/boking/{{$ticket->id}}">@guest Login To Book @else Book Now @endguest</a>
-                            </div>
-                            @endif
+                            @guest
+                                <div class="card-footer">
+                                    <a class="btn btn-primary btn-block" href="/ticket/boking/{{ $ticket->id }}">Login To
+                                        Book</a>
+                                </div>
+                            @else
+                                @if (Auth::user()->role === 'member')
+                                    <div class="card-footer">
+                                        <a class="btn btn-primary btn-block" href="/ticket/boking/{{ $ticket->id }}">@guest
+                                                Login To Book
+                                            @else
+                                            Book Now @endguest
+                                        </a>
+                                    </div>
+                                @endif
+                            @endguest
                     </div>
                 </div>
             @endforeach
@@ -76,18 +95,18 @@
 
 
 @section('js')
-<script>
-    $('#filter-location').on("change", function(){
-        let location = $('#filter-location').find(":selected").val()
-        $.ajax({
-            url: location===null? `/ticket/all`:`/ticket/location/${location}`,
-            type: 'GET',
-            dataType: 'json',
-            success: function (response){
-                $('#card-ticket').html("")
-                response.data.forEach(i => {
-                    console.log(i);
-                    $('#card-ticket').append(`
+    <script>
+        $('#filter-location').on("change", function() {
+            let location = $('#filter-location').find(":selected").val()
+            $.ajax({
+                url: location === null ? `/ticket/all` : `/ticket/location/${location}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    $('#card-ticket').html("")
+                    response.data.forEach(i => {
+                        console.log(i);
+                        $('#card-ticket').append(`
                         <div class="col-lg-4 col-md-6 mt-5 d-flex align-items-stretch">
                             <div class="card">
                                 <div class="card-header"> ${i.name} (Rp ${i.price})</div>
@@ -100,17 +119,16 @@
                                         </div>
                                     </li>
                                     ${response.role!=='employe'? `<div class="card-footer">
-                                        <a class="btn btn-primary btn-block" href="/ticket/boking/${i.id}">${response.role==='member' ? 'Book Now': 'Login To Book'}</a>
-                                    </div>` : ''}
+                                            <a class="btn btn-primary btn-block" href="/ticket/boking/${i.id}">${response.role==='member' ? 'Book Now': 'Login To Book'}</a>
+                                        </div>` : ''}
                                     
                             </div>
                         </div>
                     `)
-                });
-            }, 
+                    });
+                },
 
+            })
         })
-    })
-</script>
-    
+    </script>
 @endsection
