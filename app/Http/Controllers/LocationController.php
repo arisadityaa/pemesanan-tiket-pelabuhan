@@ -106,13 +106,4 @@ class LocationController extends Controller
         flash()->addWarning($message, 'Location delete');
         return redirect()->back();
     }
-
-    public function ajax(){
-        $locations = Location::all();
-        return view('test.ajax', compact('locations'));
-    }
-    public function get(){
-        $ticket = Ticket::all();
-        return $ticket;
-    }
 }

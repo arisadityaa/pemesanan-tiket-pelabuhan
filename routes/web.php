@@ -74,8 +74,5 @@ Route::get('/employe', [EmployeController::class, 'index'])->middleware(['auth',
 Route::get('/user-book/print/{id}', [MemberController::class, 'print_book']);
 Route::get('/user-ticket/print/{id}', [MemberController::class, 'print_ticket']);
 
-Route::get('/test', [LocationController::class, 'ajax']);
-Route::get('/test/data', [LocationController::class, 'get']);
-
 Route::get('/ticket/location/{id}', [TicketController::class, 'filter_ticket']);
 Route::get('/ticket/all', [TicketController::class, 'filter_all_ticket']);
