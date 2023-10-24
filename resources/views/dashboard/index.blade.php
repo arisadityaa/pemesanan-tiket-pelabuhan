@@ -39,7 +39,6 @@
         <h3 class="mb-3 text-center text-secondary">Bring your destion dreams come true</h3>
 
         <div class="input-group d-flex justify-content-end mt-4">
-            {{-- <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"> --}}
             <select class="form-control" id="filter-location" aria-label="Default select example">
                 <option selected value="" class="text-center">Select Location Sail</option>
                 @foreach ($locations as $location)
