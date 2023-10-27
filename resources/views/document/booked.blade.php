@@ -19,7 +19,7 @@
         </ul>
 
         <div style="text-align: center; color: orange">
-            <h3>Harap dibayarkan H-3 Sebelum Pelayaran Berlangsung!</h3>
+            <h3>Tunjukkan Bukti Boking Sebelum Pelayaran Berlangsung!</h3>
         </div>
     </div>
 @endsection

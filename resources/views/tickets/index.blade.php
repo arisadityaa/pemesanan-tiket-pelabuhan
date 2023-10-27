@@ -258,19 +258,5 @@
                 })
             })
         })
-
-        function btn_delete(data){
-            return
-            `
-            <div class="col-5">
-                <form action="/ticket/${data.id}" method="post"
-                    onsubmit="return confirm('Are You Sure To Delete This Item?');">
-                    //  @csrf
-                    //  @method('delete')
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                </form>
-            </div>
-            `
-        }
     </script>
 @endsection

@@ -19,8 +19,14 @@ class SailController extends Controller
 
     public function ticket(Request $request)
     {
-        $ticket = Boking::with('ticket')->with('member')->whereIn('id', $request)->get()->first();
-        return view('sails.index', compact('ticket'));
+        $ticket = Boking::with('ticket','member.user:name,id')->whereIn('id', $request)->get()->first();
+        // return view('sails.index', compact('ticket'));
+        // return $request;
+        if(empty($ticket)){
+            return response()->json(['status'=>'failed']);
+        }else{
+            return response()->json(['status'=>'success', 'data'=> $ticket]);
+        }
     }
 
     public function accept($id)
