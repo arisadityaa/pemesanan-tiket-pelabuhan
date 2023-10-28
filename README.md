@@ -72,5 +72,5 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - Run php artisan serve
 - Go to link localhost:8000
 
-## Online Deployment
+## Online Test
 go to: https://sailweb.000webhostapp.com/
