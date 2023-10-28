@@ -62,3 +62,15 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## How to Use
+- Clone project
+- Run composer install
+- Run cp .env.example .env
+- Run php artisan key:generate
+- Run php artisan migrate
+- Run php artisan serve
+- Go to link localhost:8000
+
+## Online Deployment
+go to: https://sailweb.000webhostapp.com/
