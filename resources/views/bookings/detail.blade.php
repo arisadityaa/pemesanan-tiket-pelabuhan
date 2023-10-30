@@ -1,3 +1,5 @@
+{{-- belum/gak dipakek --}}
+
 @extends('layouts.app')
 @section('content')
     @include('layouts.navbar')
@@ -12,10 +14,10 @@
                 @endphp
                 <div class="col-4">
                     <h5 class="text-muted">Status : Pending</h5>
-                    @if ($stat === false)    
-                    <form action="#" method="post">
-                        <button type="submit" class="btn btn-primary">Cancel Book</button>
-                    </form>
+                    @if ($stat === false)
+                        <form action="#" method="post">
+                            <button type="submit" class="btn btn-primary">Cancel Book</button>
+                        </form>
                     @endif
                 </div>
             </div>

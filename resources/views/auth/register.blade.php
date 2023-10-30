@@ -19,7 +19,7 @@
                                     <span>Check your error!</span>
                                     <ol>
                                         @foreach ($errors->all() as $error)
-                                            <li value="{{$loop->iteration}}">{{ $error }}</li>
+                                            <li value="{{ $loop->iteration }}">{{ $error }}</li>
                                         @endforeach
                                     </ol>
                                 </div>
@@ -40,7 +40,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="input-password" class="form-label">Password</label>
-                                    <input type="password" name="password" class="form-control" id="input-password" required>
+                                    <input type="password" name="password" class="form-control" id="input-password"
+                                        required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="reinput-password" class="form-label">Retype Password</label>

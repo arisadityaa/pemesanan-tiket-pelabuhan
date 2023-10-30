@@ -9,10 +9,9 @@
 
     <div class="container mb-3">
         <!-- Button trigger modal -->
-        @if (Auth::user()->role === 'employe')
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">Create
-                Locations</button>
-        @endif
+        @can('employe')
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">Create Locations</button>
+        @endcan
         @if ($errors->any())
             @php
                 flash()->addError('There was an error in your data.', 'Error Location');
@@ -35,9 +34,9 @@
                 <tr>
                     <th class="col-2">No</th>
                     <th class="col-8">Lokasi</th>
-                    @if (Auth::user()->role === 'employe')
+                    @can('employe')
                         <th class="col-2">Action</th>
-                    @endif
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +44,7 @@
                     <tr>
                         <th>{{ $loop->iteration }}</th>
                         <td>{{ $location->name }}</td>
-                        @if (Auth::user()->role === 'employe')
+                        @can('employe')
                             <td>
                                 <div class="row">
                                     <div class="col-lg-4">
@@ -62,10 +61,8 @@
                                         </form>
                                     </div>
                                 </div>
-
                             </td>
-                        @endif
-
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

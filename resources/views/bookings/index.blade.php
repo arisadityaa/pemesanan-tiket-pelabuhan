@@ -92,8 +92,10 @@
                         </div>
                     </form>
                     <div class="form-group d-flex text-center">
-                            <div class="col"><a class="btn btn-primary btn-block" id="print-recipt" href="#" role="button">Print Recipt Book</a></div>
-                            <div class="col" id="acc-btn"><a class="btn btn-primary btn-block" id="print-acc" href="#" role="button">Print Recipt Accept</a></div>
+                        <div class="col"><a class="btn btn-primary btn-block" id="print-recipt" href="#"
+                                role="button">Print Recipt Book</a></div>
+                        <div class="col" id="acc-btn"><a class="btn btn-primary btn-block" id="print-acc"
+                                href="#" role="button">Print Recipt Accept</a></div>
                     </div>
                     <div class="form-group">
                         <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
@@ -132,18 +134,18 @@
             printRecipt.setAttribute("href", `/user-book/print/${e.getAttribute("data-id")}`)
 
             const employe = e.getAttribute("data-employe")
-            if(employe===null){
+            if (employe === null) {
                 employeCol.hidden = true
-            }else{
+            } else {
                 employeCol.hidden = false
                 employeHandle.value = employe
             }
-            if(e.getAttribute("data-status")==='Accept'){
+            if (e.getAttribute("data-status") === 'Accept') {
                 let link = `/user-ticket/print/${e.getAttribute("data-id")}`
                 console.log(link);
                 printAcc.setAttribute("href", link)
                 documetAcc.hidden = false
-            }else{
+            } else {
                 documetAcc.hidden = true
             }
             console.log(employe);

@@ -7,11 +7,9 @@
     </div>
 
     <div class="container mb-3">
-        @auth
-            @if (Auth::user()->role === 'employe')
-                <a class="btn btn-primary" href="/ticket/create" role="button">Add New Ticket</a>
-            @endif
-        @endauth
+        @can('employe')
+            <a class="btn btn-primary" href="/ticket/create" role="button">Add New Ticket</a>
+        @endcan
 
         @if ($errors->any())
             @php
@@ -60,7 +58,7 @@
                         <td>{{ $ticket->location->name }}</td>
                         <td>{{ date('D, d M Y', strtotime($ticket->sail_time)) }}</td>
                         <td>{{ $ticket->stock }}</td>
-                        <td>Rp. {{ number_format($ticket->price, 2, ',', '.') }}</td>
+                        <td>Rp {{ number_format($ticket->price, 2, ',', '.') }}</td>
                         <td>
                             <div class="row">
                                 <div class="col-lg-5">
@@ -72,24 +70,24 @@
                                         data-description="{{ $ticket->description }}"
                                         onclick="isiModal(this)">Detail</button>
                                 </div>
-                                @auth
-                                    @if (Auth::user()->role === 'employe')
-                                        <div class="col-lg-5">
-                                            <form action="/ticket/{{ $ticket->id }}" method="post"
-                                                onsubmit="return confirm('Are You Sure To Delete This Item?');">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-primary">Delete</button>
-                                            </form>
-                                        </div>
-                                    @elseif (Auth::user()->role === 'member')
-                                        <div class="col-lg-5">
-                                            <form action="/ticket/boking/{{ $ticket->id }}" method="get">
-                                                <button type="submit" class="btn btn-primary">Booking</button>
-                                            </form>
-                                        </div>
-                                    @endif
-                                @endauth
+                                @can('employe')
+                                    <div class="col-lg-5">
+                                        <form action="/ticket/{{ $ticket->id }}" method="post"
+                                            onsubmit="return confirm('Are You Sure To Delete This Item?');">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                        </form>
+                                    </div>
+                                @endcan
+
+                                @can('member')
+                                    <div class="col-lg-5">
+                                        <form action="/ticket/boking/{{ $ticket->id }}" method="get">
+                                            <button type="submit" class="btn btn-primary">Booking</button>
+                                        </form>
+                                    </div>
+                                @endcan
                             </div>
                         </td>
                     </tr>
@@ -116,14 +114,12 @@
                         <div class="form-group">
                             <label for="name-ticket" class="col-form-label">Ticket Name</label>
                             <input type="text" name="name" class="form-control" id="name-ticket" autocomplete="off"
-                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest
-                                required>
+                                @can('member') disabled @endcan @guest disabled @endguest required>
                         </div>
                         <div class="form-group">
                             <label for="location-ticket" class="col-form-label">Locations</label>
                             <select class="form-control" name="location_id" id="location-ticket"
-                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest
-                                required>
+                                @can('member') disabled @endcan @guest disabled @endguest required>
                                 <option value="" disabled>Select Location Sail</option>
                                 @foreach ($locations as $location)
                                     <option value="{{ $location->id }}">{{ $location->name }}</option>
@@ -133,34 +129,29 @@
                         <div class="form-group">
                             <label for="stock-ticket" class="col-form-label">Stock</label>
                             <input type="number" name="stock" class="form-control" id="stock-ticket"
-                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest
-                                required>
+                                @can('member') disabled @endcan @guest disabled @endguest required>
                         </div>
                         <div class="form-group">
                             <label for="ticket-price" class="col-form-label">Price</label>
                             <input type="number" name="price" class="form-control" id="ticket-price"
-                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest
-                                required>
+                                @can('member') disabled @endcan @guest disabled @endguest required>
                         </div>
                         <div class="form-group">
                             <label for="ticket-sail-time" class="col-form-label">Sail Time</label>
                             <input type="datetime-local" name="sail-time" class="form-control" id="ticket-sail-time"
-                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest
-                                required>
+                                @can('member') disabled @endcan @guest disabled @endguest required>
                         </div>
                         <div class="form-group">
                             <label for="description-ticket" class="col-form-label">Description</label>
-                            <textarea name="description" id="description-ticket"rows="6" class="col-12" required
-                                @auth @if (Auth::user()->role !== 'employe') disabled @endif @endauth @guest disabled @endguest></textarea>
+                            <textarea name="description" id="description-ticket"rows="6" class="col-12" required @can('member') disabled @endcan
+                                @guest disabled @endguest></textarea>
                         </div>
                         <div class="row">
-                            @auth
-                                @if (Auth::user()->role === 'employe')
-                                    <div class="col d-flex justify-content-start"><button type="submit"
-                                            class="btn btn-primary">Edit Ticket</button>
-                                    </div>
-                                @endif
-                            @endauth
+                            @can('employe')
+                                <div class="col d-flex justify-content-start"><button type="submit"
+                                        class="btn btn-primary">Edit Ticket</button>
+                                </div>
+                            @endcan
                             <div class="col d-flex justify-content-end"><button type="button" class="btn btn-secondary"
                                     data-dismiss="modal">Close</button>
                             </div>
@@ -212,15 +203,33 @@
                         let role = response.role
                         response.data.forEach(i => {
                             // console.log(i);
+
+                            //format tanggal
+                            let dateData = i.sail_time;
+                            let formatDate = {
+                                weekday: 'short',
+                                day: '2-digit',
+                                month: 'short',
+                                year: 'numeric'
+                            }
+                            let formattedDate = new Date(dateData).toLocaleDateString(
+                                'en-GB', formatDate)
+
+                            //format rupiah
+                            let rupiahFormat = new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR',
+                            }).format(i.price);
+                            // console.log(rupiahFormat);
                             $('#table-data').append(
                                 `
                                 <tr>
                                     <th>${indexdata++}</th>
                                     <td>${i.name}</td>
                                     <td>${i.location.name}</td>
-                                    <td>${i.sail_time}</td>
+                                    <td>${formattedDate}</td>
                                     <td>${i.stock}</td>
-                                    <td>Rp. ${i.price}</td>
+                                    <td>${rupiahFormat}</td>
                                     <td>
                                         <div class="row">
                                             <div class="col-lg-5">
@@ -234,19 +243,19 @@
                                             </div>
                                             ${role==='employe' ? 
                                                 `<div class="col-lg-5">
-                                                    <form action="/ticket/${i.id}" method="post"
-                                                        onsubmit="return confirm('Are You Sure To Delete This Item?');">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-primary">Delete</button>
-                                                    </form>
-                                                </div>`
+                                                            <form action="/ticket/${i.id}" method="post"
+                                                                onsubmit="return confirm('Are You Sure To Delete This Item?');">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                                            </form>
+                                                        </div>`
                                                 :
                                                 `<div class="col-lg-5">
-                                                    <form action="/ticket/boking/${i.id}" method="get">
-                                                        <button type="submit" class="btn btn-primary">Booking</button>
-                                                    </form>
-                                                </div>`
+                                                            <form action="/ticket/boking/${i.id}" method="get">
+                                                                <button type="submit" class="btn btn-primary">Booking</button>
+                                                            </form>
+                                                        </div>`
                                             }
                                         </div>
                                     </td>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.navbar')
+    @include('layouts.navbar')
     <div class="container mb-3 mt-5">
         <h1>List User Sails</h1>
     </div>
@@ -53,15 +53,16 @@
                         <td>{{ $ticket->name }}</td>
                         <td>{{ $ticket->location->name }}</td>
                         <td>{{ date('D, d M Y', strtotime($ticket->sail_time)) }}</td>
-                        <td>{{ $ticket->stock}}</td>
+                        <td>{{ $ticket->stock }}</td>
                         <td>{{ $ticket->boking_count }}</td>
                         <td>
-                            <a class="btn btn-primary" href="/sails/print-user-list/{{$ticket->id}}" role="button">Print User List</a>
+                            <a class="btn btn-primary" href="/sails/print-user-list/{{ $ticket->id }}"
+                                role="button">Print User List</a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-    
+
 @endsection

@@ -18,18 +18,18 @@
                     </thead>
                     <tbody>
                         @foreach ($employes as $employe)
-                        <tr>
-                            <th>{{$loop->iteration}}</th>
-                            <td>{{$employe->name}}</td>
-                            <td>{{$employe->email}}</td>
-                            <td>{{$employe->created_at->format('D, M Y')}}</td>
-                            <td class="text-center">
-                                @if (Auth::user()->id === $employe->id)
-                                {{-- <button class="btn btn-primary text-center">Edit</button> --}}
-                                <a class="btn btn-primary text-center" href="/user/{{$employe->id}}">Edit</a>
-                                @endif
-                            </td>
-                        </tr>
+                            <tr>
+                                <th>{{ $loop->iteration }}</th>
+                                <td>{{ $employe->name }}</td>
+                                <td>{{ $employe->email }}</td>
+                                <td>{{ $employe->created_at->format('D, M Y') }}</td>
+                                <td class="text-center">
+                                    @if (Auth::user()->id === $employe->id)
+                                        {{-- <button class="btn btn-primary text-center">Edit</button> --}}
+                                        <a class="btn btn-primary text-center" href="/user/{{ $employe->id }}">Edit</a>
+                                    @endif
+                                </td>
+                            </tr>
                         @endforeach
 
                     </tbody>

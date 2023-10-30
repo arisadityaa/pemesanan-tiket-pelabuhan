@@ -22,25 +22,25 @@
 @endsection
 
 @section('js')
-<script>
-    $(document).ready(function(){
+    <script>
+        $(document).ready(function() {
 
-        $('#ticket-input').on("submit", function(e){
-            e.preventDefault()
-            let number = $('#number-ticket').val()
-            // console.log(number);
-            $.ajax({
-                url: `/sail/ticket`,
-                dataType: 'JSON',
-                type: 'GET',
-                data: {
-                    "ticketID" : number,
-                },
-                success: function(response){
-                    console.log(response);
-                    if(response.status === 'success'){
-                        $('#ticket-book').html(
-                        `
+            $('#ticket-input').on("submit", function(e) {
+                e.preventDefault()
+                let number = $('#number-ticket').val()
+                // console.log(number);
+                $.ajax({
+                    url: `/sail/ticket`,
+                    dataType: 'JSON',
+                    type: 'GET',
+                    data: {
+                        "ticketID": number,
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response.status === 'success') {
+                            $('#ticket-book').html(
+                                `
                         <div class="row d-fex justify-content-center">
                             <div class="card col-11 col-lg-8">
                                 <div class="card-body">
@@ -51,29 +51,28 @@
                                     <p class="card-text text-muted"> ${response.data.count} Ticket, Rp. ${response.data.total_price}</p>
                                     ${response.data.status === 'Pending'? 
                                     `
-                                        <div class="row d-flex justify-content-around">
-                                            <a href="/sail/accept/${response.data.id}" class="card-link text-success">Approve Tiket</a>
-                                            <a href="/sail/reject/${response.data.id}" class="card-link text-danger">Reject Tiket</a>
-                                        </div>
-                                    `
+                                            <div class="row d-flex justify-content-around">
+                                                <a href="/sail/accept/${response.data.id}" class="card-link text-success">Approve Tiket</a>
+                                                <a href="/sail/reject/${response.data.id}" class="card-link text-danger">Reject Tiket</a>
+                                            </div>
+                                        `
                                     :
                                     ``}
                                 </div>
                             </div>
                         </div>
                         `
-                        )
-                    }else{
-                        $('#ticket-book').html(`
+                            )
+                        } else {
+                            $('#ticket-book').html(`
                         <div class="alert alert-warning" role="alert">
                             No Data Found
                         </div>
                         `)
+                        }
                     }
-                }
+                })
             })
         })
-    })
-</script>
-    
+    </script>
 @endsection

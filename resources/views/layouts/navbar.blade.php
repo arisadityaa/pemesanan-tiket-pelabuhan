@@ -27,7 +27,8 @@
                     <a class="nav-link {{ request()->is('sail*') ? ' active' : ' ' }}" href="/sail">Sail</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('lsit-sail*') ? ' active' : ' ' }}" href="/lsit-sail">User List Sails</a>
+                    <a class="nav-link {{ request()->is('lsit-sail*') ? ' active' : ' ' }}" href="/lsit-sail">User List
+                        Sails</a>
                 </li>
             @endcan
         </ul>
@@ -36,9 +37,8 @@
             <div>
                 <ul class="navbar-nav mr-auto">
                     <li class="mb-2">
-                        <a class="btn bg-light mr-2"
-                            href="/user/{{ Auth::user()->id }}"><i
-                                class="fa-regular fa-user"></i> {{ Auth::user()->name }}</a>
+                        <a class="btn bg-light mr-2" href="/user/{{ Auth::user()->id }}"><i class="fa-regular fa-user"></i>
+                            {{ Auth::user()->name }}</a>
                     </li>
                     <li class="mb-2">
                         <a class="btn btn-outline-light" role="button" href="/logout"
