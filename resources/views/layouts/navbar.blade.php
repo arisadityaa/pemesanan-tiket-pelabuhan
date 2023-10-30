@@ -8,24 +8,28 @@
         <ul class="navbar-nav mr-auto">
             @auth
                 <li class="nav-item">
-                    <a class="nav-link" href="/location">Lokasi</a>
+                    <a class="nav-link {{ request()->is('location*') ? ' active' : ' ' }}" href="/location">Lokasi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ticket">Ticket</a>
+                    <a class="nav-link {{ request()->is('ticket*') ? ' active' : ' ' }}" href="/ticket">Ticket</a>
                 </li>
-                @if (Auth::user()->role == 'member')
-                    <li class="nav-item">
-                        <a class="nav-link " href="/boking">Bokings</a>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link " href="/employe">Employe</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="/sail">Sail</a>
-                    </li>
-                @endif
             @endauth
+            @can('member')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('boking*') ? ' active' : ' ' }}" href="/boking">Bokings</a>
+                </li>
+            @endcan
+            @can('employe')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('employe*') ? ' active' : ' ' }}" href="/employe">Employe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('sail*') ? ' active' : ' ' }}" href="/sail">Sail</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('lsit-sail*') ? ' active' : ' ' }}" href="/lsit-sail">User List Sails</a>
+                </li>
+            @endcan
         </ul>
 
         @auth

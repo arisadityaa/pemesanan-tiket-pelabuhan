@@ -18,29 +18,6 @@
         <div id="ticket-book">
 
         </div>
-        {{--@if (isset($ticket))
-            <div class="row d-fex justify-content-center">
-                <div class="card col-8">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">{{$ticket->ticket->name}}</h5>
-                        <h6 class="card-text text-muted">{{$ticket->status}}</h6>
-                        <p class="card-text">Member: {{$ticket->member->user->name}}</p>
-                        <p class="card-text text-justify">{{Str::limit($ticket->ticket->description, 200)}}</p>
-                        <p class="card-text text-muted"> {{$ticket->count}} Ticket, Rp. {{number_format($ticket->total_price, 2, ",", ".")}}</p>
-                        @if ($ticket->status === 'Pending')
-                        <div class="row d-flex justify-content-around">
-                            <a href="/sail/accept/{{$ticket->id}}" class="card-link text-success">Approve Tiket</a>
-                            <a href="/sail/reject/{{$ticket->id}}" class="card-link text-danger">Reject Tiket</a>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        @else
-            <div class="alert alert-warning" role="alert">
-                No Data Found
-            </div>
-        @endif --}}
     </div>
 @endsection
 

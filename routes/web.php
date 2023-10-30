@@ -76,3 +76,5 @@ Route::get('/user-ticket/print/{id}', [MemberController::class, 'print_ticket'])
 
 Route::get('/ticket/location/{id}', [TicketController::class, 'filter_ticket']);
 Route::get('/ticket/all', [TicketController::class, 'filter_all_ticket']);
+
+Route::get('/lsit-sail', [SailController::class, 'list_sails']);

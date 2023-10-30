@@ -67,4 +67,10 @@ class SailController extends Controller
             return redirect()->back();
         }
     }
+
+    public function list_sails(){
+        $tickets = Ticket::with('location')->withCount('boking')->get();
+        // return $tickets;
+        return view('sails.user_sails_list', compact('tickets'));
+    }
 }
