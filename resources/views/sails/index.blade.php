@@ -65,7 +65,7 @@
                         $('#ticket-book').html(
                         `
                         <div class="row d-fex justify-content-center">
-                            <div class="card col-8">
+                            <div class="card col-11 col-lg-8">
                                 <div class="card-body">
                                     <h5 class="card-title text-center">${response.data.ticket.name}</h5>
                                     <h6 class="card-text text-muted">${response.data.status}</h6>

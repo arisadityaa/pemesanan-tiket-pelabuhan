@@ -48,12 +48,12 @@
                         @if (Auth::user()->role === 'employe')
                             <td>
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-lg-4">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" id="editModalBtn"
                                             data-target="#editModal" data-id="{{ $location->id }}"
                                             data-name="{{ $location->name }}" onclick="isiModal(this)">Edit</button>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-lg-4">
                                         <form action="/location/{{ $location->id }}" method="post"
                                             onsubmit="return confirm('Are You Sure To Delete This Item?');">
                                             @csrf

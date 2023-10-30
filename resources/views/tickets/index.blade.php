@@ -63,7 +63,7 @@
                         <td>Rp. {{ number_format($ticket->price, 2, ',', '.') }}</td>
                         <td>
                             <div class="row">
-                                <div class="col-5">
+                                <div class="col-lg-5">
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#showModal" data-id="{{ $ticket->id }}"
                                         data-nama="{{ $ticket->name }}" data-location-id="{{ $ticket->location_id }}"
@@ -74,7 +74,7 @@
                                 </div>
                                 @auth
                                     @if (Auth::user()->role === 'employe')
-                                        <div class="col-5">
+                                        <div class="col-lg-5">
                                             <form action="/ticket/{{ $ticket->id }}" method="post"
                                                 onsubmit="return confirm('Are You Sure To Delete This Item?');">
                                                 @csrf
@@ -83,7 +83,7 @@
                                             </form>
                                         </div>
                                     @elseif (Auth::user()->role === 'member')
-                                        <div class="col-5">
+                                        <div class="col-lg-5">
                                             <form action="/ticket/boking/{{ $ticket->id }}" method="get">
                                                 <button type="submit" class="btn btn-primary">Booking</button>
                                             </form>
@@ -223,7 +223,7 @@
                                     <td>Rp. ${i.price}</td>
                                     <td>
                                         <div class="row">
-                                            <div class="col-5">
+                                            <div class="col-lg-5">
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#showModal" data-id="${i.id}"
                                                     data-nama="${i.name}" data-location-id="${i.location_id}"
@@ -233,7 +233,7 @@
                                                     onclick="isiModal(this)">Detail</button>
                                             </div>
                                             ${role==='employe' ? 
-                                                `<div class="col-5">
+                                                `<div class="col-lg-5">
                                                     <form action="/ticket/${i.id}" method="post"
                                                         onsubmit="return confirm('Are You Sure To Delete This Item?');">
                                                         @csrf
@@ -242,7 +242,7 @@
                                                     </form>
                                                 </div>`
                                                 :
-                                                `<div class="col-5">
+                                                `<div class="col-lg-5">
                                                     <form action="/ticket/boking/${i.id}" method="get">
                                                         <button type="submit" class="btn btn-primary">Booking</button>
                                                     </form>

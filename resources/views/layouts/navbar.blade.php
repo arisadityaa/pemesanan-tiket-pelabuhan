@@ -31,12 +31,12 @@
         @auth
             <div>
                 <ul class="navbar-nav mr-auto">
-                    <li>
+                    <li class="mb-2">
                         <a class="btn bg-light mr-2"
                             href="/user/{{ Auth::user()->id }}"><i
                                 class="fa-regular fa-user"></i> {{ Auth::user()->name }}</a>
                     </li>
-                    <li>
+                    <li class="mb-2">
                         <a class="btn btn-outline-light" role="button" href="/logout"
                             onclick="return confirm('Are you sure?')"> <i
                                 class="fa-sharp fa-solid fa-right-from-bracket"></i> Logout</a>
