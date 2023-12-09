@@ -74,3 +74,8 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Online Test
 go to: https://sails-v2.000webhostapp.com/
+
+User Admin: 
+-    email: m@gmail.com pass: m
+User Member: 
+-    email: a@gmail.com pass: a
