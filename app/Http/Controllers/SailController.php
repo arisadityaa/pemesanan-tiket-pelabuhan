@@ -8,6 +8,7 @@ use App\Models\Sail;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class SailController extends Controller
 {
@@ -69,8 +70,27 @@ class SailController extends Controller
     }
 
     public function list_sails(){
-        $tickets = Ticket::with('location')->withCount('boking')->get();
+        $tickets = Ticket::with('location')->withCount([
+            'boking as boking_count' => function($query){
+                // $query->where('status', 'Accept');
+                $query->select(Boking::raw("SUM(count) as total"))->where('status', 'Accept');
+            }
+        ])->get();
         // return $tickets;
         return view('sails.user_sails_list', compact('tickets'));
+    }
+
+    public function print_list($id){
+        $lists = Ticket::with('boking.member.user')->whereId($id)->withCount([
+            'boking as boking_count' => function($query){
+                // $query->where('status', 'Accept');
+                $query->select(Boking::raw("SUM(count) as total"))->where('status', 'Accept');
+            }
+        ])->first();
+        $title = "List Penumpang Kapal";
+        // return view('document.user_sails_detail', compact('lists', 'title'));
+        // return $lists;
+        $pdf = FacadePdf::loadview('document.user_sails_detail', compact('lists', 'title'));
+        return $pdf->stream();
     }
 }

@@ -54,10 +54,13 @@
                         <td>{{ $ticket->location->name }}</td>
                         <td>{{ date('D, d M Y', strtotime($ticket->sail_time)) }}</td>
                         <td>{{ $ticket->stock }}</td>
-                        <td>{{ $ticket->boking_count }}</td>
+                        <td>{{ $ticket->boking_count ?? 0 }}</td>
                         <td>
-                            <a class="btn btn-primary" href="/sails/print-user-list/{{ $ticket->id }}"
-                                role="button">Print User List</a>
+                            @if (isset($ticket->boking_count))
+                                <a class="btn btn-primary" href="/sails/print-user-list/{{ $ticket->id }}"
+                                    role="button">Print User List</a>
+                            @endif
+
                         </td>
                     </tr>
                 @endforeach

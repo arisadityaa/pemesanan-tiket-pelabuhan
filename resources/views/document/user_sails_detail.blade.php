@@ -3,10 +3,35 @@
     {{ $title }}
 @endsection
 @section('content')
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        .text-center{
+            text-align: center;
+        }
+    </style>
+
+
     <div>
-        <h1>
-            List Penumpang Kapal
-        </h1>
+        <h2 class="text-center">
+            List Keberangkatan Penumpang Kapal
+        </h2>
+        <h4 class="text-center">{{ $lists->name }} ({{$lists->stock}} Penumpang Max)</h4>
+        {{-- <h4 class="text-center">{{}}</h4> --}}
+
 
         <table>
             <thead>
@@ -17,16 +42,21 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach ($tickets as $tickets)
-            <tr>
-                <td>
-                    {{$loop->iteration}}
-                </td>
-                <td>{{$ticket->name}}</td>
-                <td>{{$ticket->count}}</td>
-            </tr>   
-            @endforeach --}}
+                @foreach ($lists->boking as $list)
+                    <tr>
+                        <td>
+                            {{ $loop->iteration }}
+                        </td>
+                        <td>{{ $list->member->user->name }}</td>
+                        <td>{{ $list->count }}</td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td colspan="2">Total</td>
+                    <td style="font-weight: bold;">{{$lists->boking_count}}</td>
+                </tr>
             </tbody>
         </table>
+        <br><br>
     </div>
 @endsection

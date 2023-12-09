@@ -78,3 +78,4 @@ Route::get('/ticket/location/{id}', [TicketController::class, 'filter_ticket']);
 Route::get('/ticket/all', [TicketController::class, 'filter_all_ticket']);
 
 Route::get('/lsit-sail', [SailController::class, 'list_sails']);
+Route::get('/sails/print-user-list/{id}', [SailController::class, 'print_list']);

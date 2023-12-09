@@ -13,7 +13,28 @@
 
 <body>
     <br><br>
-    @yield('content')
+    {{-- <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 bg-dark min-vh-100 ">
+                <div class="bg-dark p-2">
+                    <ul class="nav nav-pills flex-column mt-4" style="position: fixed; max-width: 20%; ">
+                        <li class="nav-item py-2 py-sm-0">
+                            <a href="#" class="nav-link active">Satu</a>
+                        </li>
+                        <li class="nav-item py-2 py-sm-0">
+                            <a href="#" class="nav-link">Dua</a>
+                        </li>
+                        <li class="nav-item py-2 py-sm-0">
+                            <a href="#" class="nav-link">Tiga</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="p-3"> --}}
+                @yield('content')
+            {{-- </div> --}}
+        {{-- </div> --}}
+    {{-- </div> --}}
     <br><br>
     <footer class="fixed-bottom text-center text-light py-2 bg-primary"> &copy;Let Sail's Tickets {{ date('Y') }}
     </footer>
