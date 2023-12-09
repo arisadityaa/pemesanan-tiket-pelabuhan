@@ -73,4 +73,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - Go to link localhost:8000
 
 ## Online Test
-go to: https://sailweb.000webhostapp.com/
+go to: https://sails-v2.000webhostapp.com/
